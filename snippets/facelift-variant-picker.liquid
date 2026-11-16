@@ -1,0 +1,234 @@
+{%- doc -%}
+  Variant picker for the facelift device product page. Each product option gets its own style:
+    - the option named in "Swatch option name" (default "Color") renders as colour swatches (buttons if no swatch is set),
+    - the option named in "Kit option name" (default "Kits") renders as big radio cards with price, savings and badges,
+    - every other option (e.g. "Shape") renders as pill buttons.
+
+  Each kit card shows its own image: the one uploaded in the block's card settings, otherwise the image attached
+  to that kit's variant, otherwise the product's featured image.
+
+  Nookly copy of nookly-variant-picker. The kit cards show the price of the variant that matches the
+  currently selected values of the other options, so they stay correct after a colour or shape change
+  (product-info.js re-renders this whole element on every change).
+
+  @param {product} product - The product whose options and selected variant are rendered.
+  @param {block} block - The variant-picker block and its settings.
+  @param {string} product_form_id - The ID of the product form associated with the picker inputs.
+  @param {object} [section] - The current product section context, supplied implicitly.
+{%- enddoc -%}
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title | escape }}"
+    data-product-id="{{ product.id }}"
+    data-currency-code="{{ cart.currency.iso_code }}"
+    data-selected-price-amount="{{ product.selected_or_first_available_variant.price | default: 0 | money_amount | escape }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- liquid
+      assign selected_variant = product.selected_or_first_available_variant
+      assign swatch_name = block.settings.swatch_option_name | downcase
+      assign kit_name = block.settings.kit_option_name | downcase
+      assign color_entries = product.metafields.custom.color.value
+    -%}
+    {%- for option in product.options_with_values -%}
+      {%- liquid
+        assign option_name_down = option.name | downcase
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        assign picker_type = 'button'
+        if option_name_down == kit_name
+          assign picker_type = 'kits'
+        elsif option_name_down == swatch_name and swatch_count > 0
+          assign picker_type = 'swatch'
+        elsif option_name_down == swatch_name and color_entries.size > 0 and block.settings.swatch_shape != 'none'
+          assign picker_type = 'colors'
+        endif
+      -%}
+      {%- if picker_type == 'kits' -%}
+        {%- liquid
+          assign kit_idx = option.position | minus: 1
+          assign legend_text = block.settings.kit_legend | default: option.name
+        -%}
+        <fieldset class="js product-form__input product-form__input--kits">
+          <legend class="form__label facelift-kits__legend">{{ legend_text | escape }}</legend>
+          <div class="facelift-kits__list">
+            {%- for value in option.values -%}
+              {%- liquid
+                assign card_position = forloop.index
+                assign image_key = 'image_' | append: card_position
+                assign subtitle_key = 'subtitle_' | append: card_position
+                assign deal_key = 'deal_' | append: card_position
+                assign badge_key = 'badge_' | append: card_position
+                assign card_subtitle = block.settings[subtitle_key]
+                assign card_deal = block.settings[deal_key]
+                assign card_badge = block.settings[badge_key]
+
+                assign match = null
+                for v in product.variants
+                  assign ok = true
+                  for o in product.options_with_values
+                    unless forloop.index0 == kit_idx
+                      if v.options[forloop.index0] != selected_variant.options[forloop.index0]
+                        assign ok = false
+                      endif
+                    endunless
+                  endfor
+                  if ok and v.options[kit_idx] == value.name
+                    assign match = v
+                    break
+                  endif
+                endfor
+
+
+                assign card_image = block.settings[image_key] | default: match.featured_image | default: product.featured_image
+
+                assign option_disabled = true
+                if value.available
+                  assign option_disabled = false
+                endif
+                assign input_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index0
+                assign input_name = option.name | append: '-' | append: option.position
+                assign escaped_value = value | escape
+              -%}
+              <div class="facelift-kits__item">
+                <input
+                  type="radio"
+                  id="{{ input_id }}"
+                  name="{{ input_name | escape }}"
+                  value="{{ escaped_value }}"
+                  form="{{ product_form_id }}"
+                  {% if value.selected %}
+                    checked
+                  {% endif %}
+                  {% if option_disabled %}
+                    class="disabled"
+                  {% endif %}
+                  data-product-url="{{ value.product_url }}"
+                  data-option-value-id="{{ value.id }}"
+                  data-option-name="{{ option.name | escape }}"
+                >
+                <label for="{{ input_id }}" class="facelift-kits__card">
+                  {%- if card_badge != blank -%}
+                    <span class="facelift-kits__badge facelift-kits__badge--{{ card_position }}">{{ card_badge | escape }}</span>
+                  {%- endif -%}
+                  <span class="facelift-kits__radio" aria-hidden="true"></span>
+                  <span class="facelift-kits__thumb" aria-hidden="true">
+                    {%- if card_image != blank -%}
+                      {{
+                        card_image
+                        | image_url: width: 240
+                        | image_tag: widths: '96, 144, 240', sizes: '56px', loading: 'lazy', alt: ''
+                      }}
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- endif -%}
+                  </span>
+                  <span class="facelift-kits__body">
+                    <span class="facelift-kits__title">{{ value }}</span>
+                    {%- if card_deal != blank -%}
+                      <span class="facelift-kits__save">{{ card_deal | escape }}</span>
+                    {%- endif -%}
+                    {%- if card_subtitle != blank -%}
+                      <span class="facelift-kits__sub">{{ card_subtitle | escape }}</span>
+                    {%- endif -%}
+                  </span>
+                  <span class="facelift-kits__prices">
+                    {%- if match.compare_at_price > match.price -%}
+                      <s class="facelift-kits__was">{{ match.compare_at_price | money }}</s>
+                    {%- endif -%}
+                    <span class="facelift-kits__now">{{ match.price | money }}</span>
+                  </span>
+                  <span class="visually-hidden label-unavailable">
+                    {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+                  </span>
+                </label>
+              </div>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- elsif picker_type == 'colors' -%}
+        {%- comment -%}
+          Fallback when Shopify gives no swatch data: read the hex colour from the product's custom.color
+          metafield (a list of "color" metaobjects with label + color fields) and match it by value name.
+        {%- endcomment -%}
+        <fieldset class="js product-form__input product-form__input--swatch facelift-colors">
+          <legend class="form__label">
+            {{ option.name | escape }}:
+            <span data-selected-value>
+              {{- option.selected_value | escape -}}
+            </span>
+          </legend>
+          <div class="facelift-colors__list">
+            {%- for value in option.values -%}
+              {%- liquid
+                assign hex = null
+                assign value_down = value.name | downcase
+                for entry in color_entries
+                  assign entry_label = entry.label.value | downcase
+                  if entry_label == value_down
+                    assign hex = entry.color.value
+                  endif
+                endfor
+                assign input_id = section.id | append: '-' | append: option.position | append: '-' | append: forloop.index0
+                assign input_name = option.name | append: '-' | append: option.position
+                assign escaped_value = value | escape
+              -%}
+              <input
+                type="radio"
+                id="{{ input_id }}"
+                name="{{ input_name | escape }}"
+                value="{{ escaped_value }}"
+                form="{{ product_form_id }}"
+                {% if value.selected %}
+                  checked
+                {% endif %}
+                {% unless value.available %}
+                  class="disabled"
+                {% endunless %}
+                data-product-url="{{ value.product_url }}"
+                data-option-value-id="{{ value.id }}"
+                data-option-name="{{ option.name | escape }}"
+              >
+              <label
+                for="{{ input_id }}"
+                class="facelift-colors__swatch facelift-colors__swatch--{{ block.settings.swatch_shape }}"
+                {% if hex != blank %}
+                  style="--facelift-swatch: {{ hex }};"
+                {% endif %}
+                title="{{ escaped_value }}"
+              >
+                <span class="visually-hidden">{{ escaped_value }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </fieldset>
+      {%- elsif picker_type == 'swatch' -%}
+        <fieldset class="js product-form__input product-form__input--swatch">
+          <legend class="form__label">
+            {{ option.name | escape }}:
+            <span data-selected-value>
+              {{- option.selected_value | escape -}}
+            </span>
+          </legend>
+          {% render 'nookly-variant-options', option: option, block: block, picker_type: 'swatch' %}
+        </fieldset>
+      {%- else -%}
+        <fieldset class="js product-form__input product-form__input--pill">
+          <legend class="form__label">
+            {{ option.name | escape }}:
+            <span data-selected-value>
+              {{- option.selected_value | escape -}}
+            </span>
+          </legend>
+          {% render 'nookly-variant-options', option: option, block: block, picker_type: 'button' %}
+        </fieldset>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+  </variant-selects>
+{%- endunless -%}

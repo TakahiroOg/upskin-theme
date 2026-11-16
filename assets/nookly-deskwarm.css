@@ -1,0 +1,1079 @@
+/*
+ * Nookly design layer.
+ * Loaded only by layout/theme.nookly.liquid (used by templates/product.deskwarm.json),
+ * so nothing here affects the other templates. Everything is scoped to body.nookly.
+ * Colours come from the theme colour schemes; only spacing, type rhythm and layout live here.
+ */
+
+body.nookly {
+  --nk-body-lh: 1.6;
+  --nk-heading-lh: 1.1;
+  --nk-card-shadow: 0 0.2rem 1.2rem rgba(var(--color-foreground), 0.08);
+}
+
+/* ---------- Type rhythm (line height) ---------- */
+
+body.nookly,
+body.nookly :is(p, li, td, th, .rte, .subtitle, .caption-large, .accordion__content, .product__text, .price, .field__input) {
+  line-height: var(--nk-body-lh);
+}
+
+body.nookly :is(h1, h2, h3, h4, h5, .h0, .h1, .h2, .h3, .h4, .h5, .hxl, .hxxl) {
+  line-height: var(--nk-heading-lh);
+  letter-spacing: -0.01em;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+/* Small headings that sit next to icons need a little more air than big ones */
+body.nookly :is(.accordion__title, .multicolumn-card__info h3, .nookly-acc__title) {
+  line-height: 1.25;
+}
+
+body.nookly .rte > * + * {
+  margin-top: 1.2rem;
+}
+
+body.nookly .rte p {
+  margin: 0;
+}
+
+body.nookly .rte p + p {
+  margin-top: 1.2rem;
+}
+
+body.nookly .rte :is(ul, ol) {
+  padding-left: 2rem;
+}
+
+body.nookly .rte li + li {
+  margin-top: 0.6rem;
+}
+
+body.nookly .rte li {
+  padding-left: 0.2rem;
+}
+
+/* ---------- Headings: desktop sizes ---------- */
+
+@media screen and (min-width: 750px) {
+  body.nookly :is(.h0) {
+    font-size: calc(var(--font-heading-scale) * 4.4rem);
+  }
+
+  body.nookly :is(h1, .h1) {
+    font-size: calc(var(--font-heading-scale) * 3.4rem);
+  }
+
+  body.nookly :is(h2, .h2) {
+    font-size: calc(var(--font-heading-scale) * 2.8rem);
+  }
+
+  body.nookly :is(h3, .h3) {
+    font-size: calc(var(--font-heading-scale) * 2rem);
+  }
+}
+
+/* ---------- Mobile: tighter rhythm, smaller headings, full-width buttons ---------- */
+
+@media screen and (max-width: 749px) {
+  body.nookly {
+    --nk-body-lh: 1.5;
+    --nk-heading-lh: 1.15;
+  }
+
+  body.nookly :is(.h0) {
+    font-size: calc(var(--font-heading-scale) * 2.8rem);
+  }
+
+  body.nookly :is(h1, .h1) {
+    font-size: calc(var(--font-heading-scale) * 2.4rem);
+  }
+
+  body.nookly :is(h2, .h2) {
+    font-size: calc(var(--font-heading-scale) * 2rem);
+  }
+
+  body.nookly :is(h3, .h3) {
+    font-size: calc(var(--font-heading-scale) * 1.7rem);
+  }
+
+  body.nookly :is(h4, .h4) {
+    font-size: calc(var(--font-heading-scale) * 1.5rem);
+  }
+
+  /* Keep the gap between a heading and the text under it small */
+  body.nookly :is(h1, h2, h3, .h0, .h1, .h2, .h3) + .rte,
+  body.nookly :is(h1, h2, h3, .h0, .h1, .h2, .h3) + p {
+    margin-top: 1rem;
+  }
+
+  body.nookly .rte > * + *,
+  body.nookly .rte p + p {
+    margin-top: 0.9rem;
+  }
+
+  /* Call-to-action buttons fill the width like on the reference page */
+  body.nookly :is(.image-with-text__content, .rich-text__buttons, .multicolumn__button, .nookly-cta) .button {
+    width: 100%;
+    max-width: 36rem;
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+body.nookly .button {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  min-height: 5.2rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+body.nookly .button--primary {
+  box-shadow: 0 0.6rem 1.4rem rgba(var(--color-button), 0.28);
+}
+
+/* ---------- Two-column rows (hero, story rows, guarantee) ---------- */
+
+body.nookly .image-with-text__content {
+  padding: 2.4rem 0;
+}
+
+@media screen and (min-width: 750px) {
+  body.nookly .image-with-text__grid {
+    column-gap: 6rem;
+    align-items: center;
+  }
+
+  body.nookly .image-with-text__content {
+    padding: 3rem 0;
+  }
+
+  body.nookly .multirow__inner > .image-with-text + .image-with-text {
+    margin-top: 6rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .image-with-text__content {
+    padding: 2rem 0 0;
+  }
+
+  body.nookly .multirow__inner > .image-with-text + .image-with-text {
+    margin-top: 4rem;
+  }
+
+  body.nookly .image-with-text__media {
+    border-radius: var(--media-radius);
+  }
+}
+
+body.nookly .image-with-text__text + .image-with-text__text,
+body.nookly .image-with-text__heading + .image-with-text__text {
+  margin-top: 1.4rem;
+}
+
+body.nookly .image-with-text__text + .button,
+body.nookly .image-with-text__text.rte + .button {
+  margin-top: 2.4rem;
+}
+
+/* ---------- Product block ---------- */
+
+body.nookly .product__title h1 {
+  line-height: var(--nk-heading-lh);
+}
+
+body.nookly .product__info-container > * + * {
+  margin-top: 1.6rem;
+}
+
+body.nookly .product__info-container .product__text {
+  margin-top: 0.8rem;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .product__info-container > * + * {
+    margin-top: 1.2rem;
+  }
+}
+
+/* ---------- Cards (reviews and rows) ---------- */
+
+body.nookly .nookly-mc--cards .multicolumn-card {
+  height: 100%;
+  padding: 2rem;
+  border-radius: var(--text-boxes-radius, 2.4rem);
+  box-shadow: var(--nk-card-shadow);
+}
+
+body.nookly .nookly-mc--cards .multicolumn-card__image-wrapper {
+  margin-bottom: 1.6rem;
+}
+
+body.nookly .nookly-mc--cards .multicolumn-card .media {
+  border-radius: calc(var(--media-radius, 2.4rem) * 0.6);
+  overflow: hidden;
+}
+
+body.nookly .nookly-mc--cards .multicolumn-card__info {
+  padding: 0;
+  text-align: center;
+}
+
+body.nookly .nookly-mc--cards .multicolumn-card__info h3 {
+  margin-top: 1.2rem;
+  font-size: 1.5rem;
+}
+
+body.nookly .nookly-mc--cards .multicolumn-card__info .rte {
+  order: -1;
+}
+
+body.nookly .nookly-mc--cards .multicolumn-list {
+  row-gap: 2rem;
+}
+
+/* Accordion rows as soft white cards */
+body.nookly .nookly-acc .collapsible-row-layout .accordion {
+  border: 0;
+  margin-bottom: 1.4rem;
+  box-shadow: var(--nk-card-shadow);
+  overflow: hidden;
+}
+
+body.nookly .nookly-acc .collapsible-row-layout .accordion summary {
+  padding: 1.8rem 2rem;
+  align-items: center;
+}
+
+body.nookly .nookly-acc .collapsible-row-layout .accordion .accordion__content {
+  padding: 0 2rem 2rem;
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-acc .collapsible-row-layout .accordion summary {
+    padding: 1.4rem 1.6rem;
+  }
+
+  body.nookly .nookly-acc .collapsible-row-layout .accordion .accordion__content {
+    padding: 0 1.6rem 1.6rem;
+  }
+}
+
+/* Numbered rows (orange badge like "5 reasons") */
+body.nookly .nookly-acc--numbered .collapsible-content__grid {
+  counter-reset: nookly-row;
+}
+
+body.nookly .nookly-acc--numbered .accordion summary::before {
+  counter-increment: nookly-row;
+  content: counter(nookly-row);
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1.6rem;
+  border-radius: 50%;
+  background: rgb(var(--color-background));
+  box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.1);
+  color: rgb(var(--color-button));
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+body.nookly .nookly-acc--numbered .accordion .summary__title,
+body.nookly .nookly-acc--numbered .accordion__title {
+  flex: 1;
+  max-width: none;
+}
+
+body.nookly .nookly-acc--numbered .accordion__content {
+  padding-left: calc(2rem + 5.6rem);
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-acc--numbered .accordion summary::before {
+    width: 3.4rem;
+    height: 3.4rem;
+    margin-right: 1.2rem;
+    font-size: 1.7rem;
+  }
+
+  body.nookly .nookly-acc--numbered .accordion__content {
+    padding-left: calc(1.6rem + 4.6rem);
+  }
+}
+
+/* Image column of the accordion section */
+body.nookly .nookly-acc .collapsible-content__media {
+  border-radius: var(--media-radius);
+  overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+  body.nookly .nookly-acc .collapsible-content__grid {
+    align-items: center;
+    column-gap: 4rem;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-acc .collapsible-content__grid {
+    row-gap: 2.4rem;
+  }
+}
+
+/* ---------- Section rhythm on mobile ---------- */
+
+@media screen and (max-width: 749px) {
+  body.nookly .title-wrapper-with-link,
+  body.nookly .collapsible-content__heading,
+  body.nookly .rich-text__heading {
+    margin-bottom: 1.6rem;
+  }
+
+  body.nookly .multicolumn-card__info {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* Placeholder image in the accordion section: give the "adapt" box a height */
+body.nookly .nookly-acc .collapsible-content__media--adapt:not([style]) {
+  padding-bottom: 110%;
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-acc .collapsible-content__media--adapt:not([style]) {
+    padding-bottom: 80%;
+  }
+}
+
+/* ---------- Hero (sections/nookly-hero.liquid) ---------- */
+
+body.nookly .nookly-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+body.nookly .nookly-hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.4rem;
+  min-width: 0;
+}
+
+body.nookly .nookly-hero__content > * {
+  margin: 0;
+}
+
+body.nookly .nookly-hero__caption {
+  color: rgba(var(--color-foreground), 0.75);
+  font-weight: 600;
+}
+
+body.nookly .nookly-hero__heading {
+  letter-spacing: -0.02em;
+}
+
+/* Lighter, larger second line (like "Say hello to feline feeding comfort!") */
+body.nookly .nookly-hero__subheading {
+  font-family: var(--font-body-family);
+  font-style: var(--font-body-style);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-size: calc(var(--font-heading-scale) * 2.2rem);
+}
+
+body.nookly .nookly-hero__subheading--large {
+  font-size: calc(var(--font-heading-scale) * 2.6rem);
+}
+
+body.nookly .nookly-hero__text {
+  max-width: 52rem;
+}
+
+body.nookly .nookly-hero__button {
+  margin-top: 0.6rem;
+}
+
+/* Customer quote card */
+body.nookly .nookly-hero__quote {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  width: 100%;
+  max-width: 56rem;
+  margin: 1rem 0 0;
+  padding: 1.4rem 1.8rem;
+  border-radius: 1.6rem;
+  text-align: left;
+}
+
+body.nookly .nookly-hero__avatar {
+  flex: 0 0 auto;
+  width: 6.4rem;
+  height: 6.4rem;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(var(--color-foreground), 0.12);
+}
+
+body.nookly .nookly-hero__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.nookly .nookly-hero__quote-body {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+body.nookly .nookly-hero__quote-body .rte {
+  line-height: 1.45;
+}
+
+body.nookly .nookly-hero__quote-author {
+  margin-top: 0.4rem;
+  font-weight: 600;
+}
+
+/* Image + floating labels */
+body.nookly .nookly-hero__media-wrap {
+  position: relative;
+  min-width: 0;
+}
+
+body.nookly .nookly-hero__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--media-radius, 2.8rem);
+}
+
+body.nookly .nookly-hero__media--circle {
+  border-radius: 50%;
+}
+
+body.nookly .nookly-hero__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.nookly .nookly-hero__callout {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: 55%;
+  margin: 0;
+  padding: 0.8rem 1.4rem 0.8rem 1rem;
+  border-radius: 99rem;
+  background: rgb(var(--color-background));
+  color: rgb(var(--color-foreground));
+  box-shadow: 0 0.4rem 1.6rem rgba(var(--color-foreground), 0.16);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+body.nookly .nookly-hero__check {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: rgb(var(--color-button));
+}
+
+body.nookly .nookly-hero__callout--top-left { top: 6%; left: 3%; }
+body.nookly .nookly-hero__callout--top-right { top: 14%; right: 3%; }
+body.nookly .nookly-hero__callout--bottom-left { bottom: 14%; left: 3%; }
+body.nookly .nookly-hero__callout--bottom-right { bottom: 6%; right: 3%; }
+
+@media screen and (min-width: 750px) {
+  body.nookly .nookly-hero__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+  }
+
+  body.nookly .nookly-hero__grid--reverse .nookly-hero__content {
+    order: 2;
+  }
+
+  body.nookly .nookly-hero__callout {
+    font-size: 1.5rem;
+    padding: 1rem 1.8rem 1rem 1.2rem;
+  }
+
+  /* Labels sit half outside the image on desktop, like the reference */
+  body.nookly .nookly-hero__callout--top-left { left: -3rem; }
+  body.nookly .nookly-hero__callout--bottom-left { left: -3rem; }
+  body.nookly .nookly-hero__callout--top-right { right: -2rem; }
+  body.nookly .nookly-hero__callout--bottom-right { right: -2rem; }
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-hero__content--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  body.nookly .nookly-hero__content {
+    gap: 1.1rem;
+  }
+
+  body.nookly .nookly-hero__subheading {
+    font-size: calc(var(--font-heading-scale) * 1.9rem);
+  }
+
+  body.nookly .nookly-hero__subheading--large {
+    font-size: calc(var(--font-heading-scale) * 2.1rem);
+  }
+
+  body.nookly .nookly-hero__button {
+    width: 100%;
+    max-width: 36rem;
+  }
+
+  body.nookly .nookly-hero__quote {
+    padding: 1.2rem 1.4rem;
+    gap: 1.2rem;
+  }
+
+  body.nookly .nookly-hero__avatar {
+    width: 5.2rem;
+    height: 5.2rem;
+  }
+
+  body.nookly .nookly-hero__callout {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.1rem 0.6rem 0.8rem;
+  }
+}
+
+/* ---------- Hero: warming effect + cut-out image ---------- */
+
+body.nookly .nookly-hero__media--cutout {
+  overflow: visible;
+  border-radius: 0;
+}
+
+body.nookly .nookly-hero__media--cutout .nookly-hero__image {
+  object-fit: contain;
+  /* warm rim light around the subject */
+  filter: drop-shadow(0 0 1.6rem rgba(var(--color-button), 0.18));
+}
+
+/* Big soft orange glow behind the subject (replaces the room background) */
+body.nookly .nookly-hero__glow {
+  position: absolute;
+  inset: 2% -4% 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 58%, rgba(var(--color-button), 0.34) 0%, rgba(var(--color-button), 0.18) 38%, rgba(var(--color-button), 0.06) 60%, rgba(var(--color-button), 0) 76%);
+  filter: blur(1.2rem);
+  transform-origin: 52% 62%;
+  animation: nookly-warm-pulse 4.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Hot spot on the seat cover, blended over the photo so the cushion looks like it is glowing */
+body.nookly .nookly-hero__seat-glow {
+  position: absolute;
+  left: 33%;
+  top: 62%;
+  width: 50%;
+  height: 24%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 190, 90, 0.95) 0%, rgba(255, 120, 50, 0.65) 40%, rgba(255, 106, 58, 0) 72%);
+  mix-blend-mode: screen;
+  filter: blur(0.6rem);
+  animation: nookly-heat-pulse 3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes nookly-warm-pulse {
+  from { opacity: 0.75; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes nookly-heat-pulse {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.nookly .nookly-hero__glow,
+  body.nookly .nookly-hero__seat-glow {
+    animation: none;
+  }
+}
+
+/* Mobile: the image goes above "Say goodbye to cold seats!" */
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-hero__media-wrap {
+    order: -1;
+    max-width: 44rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  body.nookly .nookly-hero__grid {
+    gap: 1.6rem;
+  }
+
+  /* keep labels inside the image area on small screens */
+  body.nookly .nookly-hero__callout--top-left,
+  body.nookly .nookly-hero__callout--bottom-left { left: 0; }
+  body.nookly .nookly-hero__callout--top-right,
+  body.nookly .nookly-hero__callout--bottom-right { right: 0; }
+}
+
+/* ---------- No text hover effects ----------
+ * Hovering text no longer underlines it, thickens an underline or changes its colour.
+ * Each rule below restores the element's normal (not hovered) text style.
+ * Buttons, cards and background hovers are left as they are.
+ */
+
+/* Underline that appeared on hover -> none */
+body.nookly .collapsible-content summary:hover .accordion__title,
+body.nookly .header__menu-item:hover span,
+body.nookly .announcement-bar__link:hover,
+body.nookly .share-button__button:hover,
+body.nookly .footer-block__details-content .list-menu__item--link:hover,
+body.nookly .copyright__content a:hover {
+  text-decoration: none;
+}
+
+body.nookly .header__submenu .header__menu-item:hover {
+  text-decoration-line: none;
+}
+
+/* Underlined links whose underline thickened or colour changed on hover -> stay as at rest */
+body.nookly .underlined-link:hover,
+body.nookly .customer a:hover,
+body.nookly .rte a:hover {
+  color: rgba(var(--color-link), var(--alpha-link));
+  text-decoration-thickness: 0.1rem;
+}
+
+body.nookly .inline-richtext a:hover {
+  color: currentColor;
+  text-decoration-thickness: 0.1rem;
+}
+
+body.nookly .list-menu__item--active:hover,
+body.nookly .header__menu-item:hover .header__active-menu-item,
+body.nookly details[open]:hover > .header__menu-item,
+body.nookly .footer-block__details-content .list-menu__item--active:hover {
+  text-decoration-thickness: auto;
+}
+
+/* Colour changes on hover -> keep the resting colour */
+body.nookly .link--text:hover {
+  color: rgb(var(--color-foreground));
+}
+
+body.nookly .header__menu-item:hover,
+body.nookly .footer-block__details-content .list-menu__item--link:hover,
+body.nookly .copyright__content a:hover {
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+body.nookly .header__heading-link:hover .h2 {
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+/* Smooth transitions on those properties are pointless now */
+body.nookly .header__menu-item span,
+body.nookly .rte a,
+body.nookly .underlined-link,
+body.nookly .inline-richtext a {
+  transition: none;
+}
+
+/* ---------- Button text in capitals ---------- */
+
+body.nookly :is(.button, .shopify-challenge__button, .customer button, .shopify-payment-button__button--unbranded) {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---------- Benefit list ticks (product block, vertical icon list only) ----------
+ * The three benefits next to the title use the Nookly tick from the brand prototype:
+ * a thick orange tick with no box, instead of the theme's outlined icons.
+ * The horizontal trust icons under "Add to cart" are not affected.
+ */
+
+body.nookly .icon-with-text--vertical .svg-wrapper {
+  position: relative;
+}
+
+body.nookly .icon-with-text--vertical .svg-wrapper > svg {
+  display: none;
+}
+
+body.nookly .icon-with-text--vertical .svg-wrapper::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.4rem;
+  height: 0.8rem;
+  border-left: 0.3rem solid rgb(var(--color-button));
+  border-bottom: 0.3rem solid rgb(var(--color-button));
+  transform: translate(-50%, -72%) rotate(-45deg);
+}
+
+/* ---------- Bundle picker cards ("Choose your set") ----------
+ * Markup comes from snippets/nookly-variant-options.liquid (picker type "Bundle cards").
+ * The real radio inputs stay in the page, so keyboard use, price updates and Add to cart keep working.
+ */
+
+body.nookly .product-form__input--bundle {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+body.nookly .product-form__input--bundle .form__label {
+  display: block;
+  margin: 0 0 0.8rem;
+  padding: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: rgb(var(--color-foreground));
+}
+
+body.nookly .nookly-bundle__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* hide the radio visually, keep it focusable */
+body.nookly .nookly-bundle__grid input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.nookly .nookly-bundle__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 1.4rem;
+  border: 0.2rem solid rgba(var(--color-foreground), 0.14);
+  border-radius: 1.6rem;
+  background: var(--nookly-card-bg, #fff);
+  color: var(--nookly-card-text, rgb(var(--color-foreground)));
+  text-align: left;
+  cursor: pointer;
+  transition: none;
+}
+
+body.nookly .nookly-bundle__grid input[type='radio']:checked + .nookly-bundle__card {
+  border-color: rgb(var(--color-button));
+  background: var(--nookly-selected-bg, #ffe3d6);
+  color: var(--nookly-selected-text, rgb(var(--color-foreground)));
+}
+
+body.nookly .nookly-bundle__grid input[type='radio']:focus-visible + .nookly-bundle__card {
+  outline: 0.3rem solid rgb(var(--color-button));
+  outline-offset: 0.3rem;
+}
+
+body.nookly .nookly-bundle__grid input[type='radio']:disabled + .nookly-bundle__card,
+body.nookly .nookly-bundle__grid input[type='radio'].disabled + .nookly-bundle__card {
+  opacity: 0.55;
+}
+
+body.nookly .nookly-bundle__thumb {
+  display: block;
+  width: 6.4rem;
+  height: 6.4rem;
+  margin-bottom: 0.8rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgb(16, 26, 34);
+}
+
+body.nookly .nookly-bundle__thumb svg,
+body.nookly .nookly-bundle__thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.nookly .nookly-bundle__title {
+  display: block;
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-size: 1.7rem;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+body.nookly .nookly-bundle__subtitle {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  color: inherit;
+  opacity: 0.72;
+}
+
+/* Illustration shown when a card has no image (colours follow the theme's button colour) */
+body.nookly .nookly-bundle__art-bg { fill: rgb(16, 26, 34); }
+body.nookly .nookly-bundle__art-glow { fill: rgba(var(--color-button), 0.32); }
+body.nookly .nookly-bundle__art-body { fill: rgb(22, 35, 45); stroke: rgb(43, 63, 79); stroke-width: 2; }
+body.nookly .nookly-bundle__art-coil { fill: none; stroke: rgb(var(--color-button)); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+body.nookly .nookly-bundle__art-seat { fill: rgb(var(--color-button)); }
+body.nookly .nookly-bundle__art-leg { fill: none; stroke: rgb(42, 57, 70); stroke-width: 10; stroke-linecap: round; }
+body.nookly .nookly-bundle__art-bar { fill: rgb(var(--color-button)); }
+body.nookly .nookly-bundle__art-bar--1 { opacity: 0.45; }
+body.nookly .nookly-bundle__art-bar--2 { opacity: 0.75; }
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-bundle__grid { gap: 0.8rem; }
+
+  body.nookly .nookly-bundle__card { padding: 1.1rem; border-radius: 1.4rem; }
+
+  body.nookly .nookly-bundle__thumb { width: 5.2rem; height: 5.2rem; margin-bottom: 0.6rem; }
+
+  body.nookly .nookly-bundle__title { font-size: 1.5rem; }
+
+  body.nookly .nookly-bundle__subtitle { font-size: 1.3rem; }
+}
+
+/* ---------- Price row (product block) ----------
+ * Same look as the Nookly prototype: big price, struck-through compare-at price, orange "% off" pill.
+ * Markup comes from snippets/nookly-price.liquid.
+ */
+
+body.nookly .nookly-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem 1.2rem;
+  margin: 1.8rem 0 1.4rem;
+  font-size: inherit;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+/* let the theme's inner wrappers take part in the row, so the order can be set */
+body.nookly .nookly-price .price__container,
+body.nookly .nookly-price.price--on-sale .price__sale {
+  display: contents;
+}
+
+/* current price: large, heading font */
+body.nookly .nookly-price .price-item--sale,
+body.nookly .nookly-price:not(.price--on-sale) .price-item--regular {
+  order: 1;
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-size: calc(var(--font-heading-scale) * 2.3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: rgb(var(--color-foreground));
+}
+
+/* compare-at price: smaller, muted, struck through */
+body.nookly .nookly-price.price--on-sale .price__sale > span:not(.visually-hidden):not(.price-item) {
+  order: 2;
+}
+
+body.nookly .nookly-price.price--on-sale .price-item--regular {
+  margin: 0;
+  font-size: 1.8rem;
+  line-height: 1.1;
+  color: rgba(var(--color-foreground), 0.7);
+  text-decoration: line-through;
+}
+
+/* "% off" pill */
+body.nookly .nookly-price .price__badge-sale,
+body.nookly .nookly-price .price__badge-sold-out {
+  order: 3;
+  margin: 0;
+  padding: 0.3rem 1rem;
+  border: 0;
+  border-radius: 99rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+body.nookly .nookly-price .price__badge-sale {
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-price {
+    margin: 1.4rem 0 1.2rem;
+  }
+
+  body.nookly .nookly-price .price-item--sale,
+  body.nookly .nookly-price:not(.price--on-sale) .price-item--regular {
+    font-size: calc(var(--font-heading-scale) * 2rem);
+  }
+
+  body.nookly .nookly-price.price--on-sale .price-item--regular {
+    font-size: 1.6rem;
+  }
+}
+
+/* ---------- Product page tabs under "Add to cart" (Shipping, Guarantee, Safety) ----------
+ * Smaller titles, still in the bold heading font.
+ * The FAQ and "What you get" accordions are not affected.
+ */
+
+body.nookly .product__accordion .accordion__title {
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .product__accordion .accordion__title {
+    font-size: 1.4rem;
+  }
+}
+
+/* ---------- Feature rows (sections/nookly-feature-row.liquid) ---------- */
+
+body.nookly .nookly-feature__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+body.nookly .nookly-feature__media {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--media-radius, 2.4rem);
+  background: rgba(var(--color-foreground), 0.06);
+}
+
+body.nookly .nookly-feature__video,
+body.nookly .nookly-feature__image,
+body.nookly .nookly-feature__media video,
+body.nookly .nookly-feature__media img,
+body.nookly .nookly-feature__placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.nookly .nookly-feature__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.4rem;
+  min-width: 0;
+}
+
+body.nookly .nookly-feature__content > * {
+  margin: 0;
+}
+
+body.nookly .nookly-feature__text {
+  max-width: 52rem;
+}
+
+body.nookly .nookly-feature__button {
+  margin-top: 0.8rem;
+}
+
+@media screen and (min-width: 750px) {
+  body.nookly .nookly-feature__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+
+  body.nookly .nookly-feature__grid--reverse .nookly-feature__media {
+    order: 2;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  body.nookly .nookly-feature__content {
+    gap: 1.1rem;
+  }
+
+  body.nookly .nookly-feature__button {
+    width: 100%;
+    max-width: 36rem;
+  }
+}
+
+/* ---------- Hero heading: bigger, and a hover effect on the two headline lines ---------- */
+
+body.nookly .nookly-hero__heading.h0 {
+  font-size: calc(var(--font-heading-scale) * 3.4rem);
+  line-height: 1.05;
+}
+
+@media screen and (min-width: 750px) {
+  body.nookly .nookly-hero__heading.h0 {
+    font-size: calc(var(--font-heading-scale) * 5.6rem);
+  }
+}
+
+body.nookly .nookly-hero__heading,
+body.nookly .nookly-hero__subheading {
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+/* hover: the line "warms up" to the brand colour; motion only if the visitor allows it */
+@media (hover: hover) {
+  body.nookly .nookly-hero__heading:hover,
+  body.nookly .nookly-hero__subheading:hover {
+    color: rgb(var(--color-button));
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  body.nookly .nookly-hero__heading:hover,
+  body.nookly .nookly-hero__subheading:hover {
+    transform: translateY(-0.3rem);
+  }
+}
+
+/* Smooth scroll when a button jumps to an on-page section (e.g. "GET MINE NOW" -> #buy) */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

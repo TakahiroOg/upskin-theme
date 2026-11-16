@@ -1,0 +1,346 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.facelift",
+  "sections": {
+    "main": {
+      "type": "facelift-main-product",
+      "blocks": {
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Lift and sculpt your face <em>in 5 minutes a day.</em>",
+            "heading_size": "h1"
+          }
+        },
+        "subheading": {
+          "type": "text",
+          "settings": {
+            "text": "A microcurrent facial device that gently stimulates your facial muscles, the way a workout trains your body, for a firmer, lifted look from the comfort of home.",
+            "text_style": "subtitle"
+          }
+        },
+        "checklist": {
+          "type": "checklist",
+          "settings": {
+            "list": "<ul><li>Targets the jawline, cheeks and brow area</li><li>Visibly firmer, more lifted-looking skin with regular use</li></ul>"
+          }
+        },
+        "variant-picker": {
+          "type": "variant_picker",
+          "settings": {
+            "swatch_shape": "circle",
+            "swatch_option_name": "Color",
+            "kit_option_name": "Choose Your Set",
+            "kit_legend": "Choose your set",
+            "deal_1": "",
+            "subtitle_1": "Single device",
+            "badge_1": "",
+            "deal_2": "",
+            "subtitle_2": "Device + Conductive Gel",
+            "badge_2": "Most popular",
+            "deal_3": "",
+            "subtitle_3": "",
+            "badge_3": "",
+            "deal_4": "",
+            "subtitle_4": "",
+            "badge_4": ""
+          }
+        },
+        "buy-buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": false,
+            "button_template": "Secure checkout"
+          }
+        },
+        "payments": {
+          "type": "payments",
+          "settings": {}
+        },
+        "trust": {
+          "type": "trust",
+          "settings": {
+            "icon_1": "truck",
+            "text_1": "Free shipping on offers",
+            "icon_2": "return",
+            "text_2": "60-day money-back guarantee",
+            "icon_3": "heart",
+            "text_3": "Skin-safe, gentle design"
+          }
+        }
+      },
+      "block_order": [
+        "rating",
+        "heading",
+        "subheading",
+        "checklist",
+        "variant-picker",
+        "buy-buttons",
+        "payments",
+        "trust"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-facelift-white",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "none",
+        "slider_dots": true,
+        "cover_image": "shopify://shop_images/Warm_spa_facial_device_ritual.png",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "results": {
+      "type": "facelift-before-after",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Real skin. <em>Visible change.</em>",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Used for a few minutes a day, the device helps the face look firmer, more defined and more lifted. Many people notice a difference in how their skin looks and feels after the very first session.</p><p>Results vary from person to person. Consistency is what makes the difference.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text"
+      ],
+      "settings": {
+        "before_alt": "Face before using the device",
+        "before_label": "Before",
+        "after_alt": "Face after consistent use of the device",
+        "after_label": "After",
+        "start_position": 50,
+        "slider_label": "Drag to compare before and after",
+        "layout": "image_first",
+        "color_scheme": "scheme-facelift-blush",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "how-it-works": {
+      "type": "facelift-feature-split",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "title": "Microcurrent that works the muscle",
+            "text": "Gentle microcurrent waves reach the facial muscles beneath the skin and encourage them to contract, just like a gym session for your face."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "title": "Firmer, more lifted look",
+            "text": "With regular use, the contour of your jawline, cheeks and brow area looks more toned and defined."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "title": "Better product absorption",
+            "text": "Pair it with the conductive gel and your skin looks smoother, fresher and more rested."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {
+        "layout": "image_first",
+        "eyebrow": "How it works",
+        "heading": "Your facial gym, <em>at home.</em>",
+        "text": "<p>Skin looks as firm as the muscles beneath it. This device trains those muscles with microcurrent, so your face looks lifted from the inside out.</p>",
+        "numbered": false,
+        "color_scheme": "scheme-facelift-white",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "steps": {
+      "type": "facelift-feature-split",
+      "blocks": {
+        "s1": {
+          "type": "feature",
+          "settings": {
+            "title": "Cleanse your face",
+            "text": "Start with clean, dry skin so the device makes the best contact."
+          }
+        },
+        "s2": {
+          "type": "feature",
+          "settings": {
+            "title": "Apply the conductive gel",
+            "text": "Smooth a thin, even layer over the area you want to treat."
+          }
+        },
+        "s3": {
+          "type": "feature",
+          "settings": {
+            "title": "Choose your intensity",
+            "text": "Pick the level that feels comfortable. You should feel a light tingle, never pain."
+          }
+        },
+        "s4": {
+          "type": "feature",
+          "settings": {
+            "title": "Glide and tone",
+            "text": "Move the device slowly upward and outward along your jawline, cheeks and brow for about 5 minutes."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "layout": "text_first",
+        "eyebrow": "Simple routine",
+        "heading": "Your lifting routine in <em>4 steps.</em>",
+        "text": "<p>Just 5 minutes a day, whenever suits you. No appointments, no travel, no waiting rooms.</p>",
+        "numbered": true,
+        "color_scheme": "scheme-facelift-blush",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "faq": {
+      "type": "facelift-accordion-columns",
+      "blocks": {
+        "g1": {
+          "type": "group",
+          "settings": {
+            "heading": "Using the device"
+          }
+        },
+        "r1": {
+          "type": "row",
+          "settings": {
+            "heading": "How long until I see results?",
+            "content": "<p>Many people notice a more lifted, refreshed look after the first session. For lasting results, use it 5 minutes a day, 3 to 5 times a week.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "heading": "Does it hurt?",
+            "content": "<p>No. You should feel a light tingle or gentle muscle contraction. Start on the lowest level and increase only if it feels comfortable.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "heading": "Do I need the conductive gel?",
+            "content": "<p>Yes. The gel helps the microcurrent travel evenly across your skin. It is included with your order.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "g2": {
+          "type": "group",
+          "settings": {
+            "heading": "Orders and returns"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "heading": "Is it safe for sensitive skin?",
+            "content": "<p>It is designed for gentle daily use. If you have a medical condition, a pacemaker or are pregnant, please check with your doctor first.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "r5": {
+          "type": "row",
+          "settings": {
+            "heading": "What if it does not work for me?",
+            "content": "<p>Try it for 60 days. If you are not happy with the results, contact us for a full refund.</p>",
+            "page": "",
+            "open": false
+          }
+        },
+        "r6": {
+          "type": "row",
+          "settings": {
+            "heading": "How long does shipping take?",
+            "content": "<p>Orders ship within 1 to 2 business days, and you will receive tracking as soon as your package is on its way.</p>",
+            "page": "",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "r1",
+        "r2",
+        "r3",
+        "g2",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "settings": {
+        "color_scheme": "scheme-facelift-white",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
+    "reviews": {
+      "type": "facelift-reviews",
+      "settings": {
+        "heading": "What our customers say",
+        "heading_size": "h2",
+        "count_text": "Based on [count] reviews",
+        "verified_text": "Verified",
+        "button_label": "Write a review",
+        "button_link": "",
+        "color_scheme": "scheme-facelift-blush",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "main",
+    "results",
+    "how-it-works",
+    "steps",
+    "faq",
+    "reviews"
+  ]
+}

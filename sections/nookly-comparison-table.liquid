@@ -1,0 +1,376 @@
+{% comment %}
+  Nookly: comparison table.
+  Copy of sections/rich-text.liquid, adapted to show a two-column comparison table.
+  Each table row is a "Row" block, so rows can be added, removed and reordered in the theme editor.
+{% endcomment %}
+
+{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .nookly-compare__scroll {
+    width: 100%;
+    max-width: 80rem;
+    margin: 3rem auto 0;
+    padding-top: 1.2rem;
+    overflow-x: auto;
+  }
+
+  .nookly-compare__table {
+    width: 100%;
+    min-width: 46rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: center;
+    background: rgba(var(--color-foreground), 0.04);
+    border-radius: var(--text-boxes-radius, 0);
+  }
+
+  .nookly-compare__table th,
+  .nookly-compare__table td {
+    padding: 1.6rem 1.6rem;
+    border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.1);
+    line-height: 1.35;
+  }
+
+  .nookly-compare__table th:first-child,
+  .nookly-compare__table td:first-child {
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .nookly-compare__table thead th {
+    font-family: var(--font-heading-family);
+    font-weight: var(--font-heading-weight);
+    border-bottom: 0;
+  }
+
+  /* Highlight the first product column as an outlined card that overhangs the table */
+  .nookly-compare__table th:nth-child(2),
+  .nookly-compare__table td:nth-child(2) {
+    background: rgb(var(--color-background));
+    border-left: 0.2rem solid rgb(var(--color-button));
+    border-right: 0.2rem solid rgb(var(--color-button));
+  }
+
+  .nookly-compare__table thead th:nth-child(2) {
+    border-top: 0.2rem solid rgb(var(--color-button));
+    border-radius: 1.6rem 1.6rem 0 0;
+    padding-top: 2.4rem;
+    transform: translateY(-1.2rem);
+    margin-bottom: -1.2rem;
+  }
+
+  .nookly-compare__table tbody tr:last-child th,
+  .nookly-compare__table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .nookly-compare__table tbody tr:last-child td:nth-child(2) {
+    border-bottom: 0.2rem solid rgb(var(--color-button));
+    border-radius: 0 0 1.6rem 1.6rem;
+  }
+
+  .nookly-compare__yes {
+    color: rgb(var(--color-button));
+    font-weight: 700;
+    font-size: 1.2em;
+  }
+
+  .nookly-compare__no {
+    color: rgba(var(--color-foreground), 0.55);
+    font-size: 1.2em;
+  }
+
+  .nookly-compare__text {
+    color: rgba(var(--color-foreground), 0.75);
+  }
+
+  @media screen and (max-width: 749px) {
+    .nookly-compare__table th,
+    .nookly-compare__table td {
+      padding: 1.2rem 1rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  .nookly-compare .rich-text__buttons {
+    margin-top: 3rem;
+  }
+{%- endstyle -%}
+
+<div class="isolate{% unless section.settings.full_width %} page-width{% endunless %}">
+  <div class="rich-text nookly-compare content-container color-{{ section.settings.color_scheme }} gradient{% if section.settings.full_width %} rich-text--full-width content-container--full-width{% endif %} section-{{ section.id }}-padding">
+    <div class="rich-text__wrapper rich-text__wrapper--center{% if section.settings.full_width %} page-width{% endif %}">
+      <div class="rich-text__blocks {{ section.settings.content_alignment }}">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="rich-text__heading rte inline-richtext {{ section.settings.heading_size }}">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="rich-text__text rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="nookly-compare__scroll">
+          <table class="nookly-compare__table">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <span class="visually-hidden">{{ section.settings.feature_label | escape }}</span>
+                </th>
+                <th scope="col">{{ section.settings.column_1_label | escape }}</th>
+                <th scope="col">{{ section.settings.column_2_label | escape }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for block in section.blocks -%}
+                <tr {{ block.shopify_attributes }}>
+                  <th scope="row">{{ block.settings.feature | escape }}</th>
+                  {%- for n in (1..2) -%}
+                    {%- liquid
+                      if n == 1
+                        assign value = block.settings.value_1
+                        assign custom = block.settings.text_1
+                      else
+                        assign value = block.settings.value_2
+                        assign custom = block.settings.text_2
+                      endif
+                    -%}
+                    <td>
+                      {%- case value -%}
+                        {%- when 'yes' -%}
+                          <span class="nookly-compare__yes" aria-hidden="true">✓</span>
+                          <span class="visually-hidden">{{ section.settings.yes_label | escape }}</span>
+                        {%- when 'no' -%}
+                          <span class="nookly-compare__no" aria-hidden="true">✗</span>
+                          <span class="visually-hidden">{{ section.settings.no_label | escape }}</span>
+                        {%- else -%}
+                          <span class="nookly-compare__text">{{ custom | escape }}</span>
+                      {%- endcase -%}
+                    </td>
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <div class="rich-text__buttons">
+          <a
+            {% if section.settings.button_link == blank %}
+              role="link" aria-disabled="true"
+            {% else %}
+              href="{{ section.settings.button_link }}"
+            {% endif %}
+            class="button button--primary"
+          >
+            {{- section.settings.button_label | escape -}}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Nookly comparison table",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Our product vs. the alternative",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center",
+      "label": "Heading alignment"
+    },
+    {
+      "type": "header",
+      "content": "Table"
+    },
+    {
+      "type": "text",
+      "id": "column_1_label",
+      "default": "Our product",
+      "label": "Column 1 heading"
+    },
+    {
+      "type": "text",
+      "id": "column_2_label",
+      "default": "The alternative",
+      "label": "Column 2 heading"
+    },
+    {
+      "type": "text",
+      "id": "feature_label",
+      "default": "Feature",
+      "label": "Feature column label",
+      "info": "Hidden visually; read by screen readers."
+    },
+    {
+      "type": "text",
+      "id": "yes_label",
+      "default": "Yes",
+      "label": "Screen reader text for ✓"
+    },
+    {
+      "type": "text",
+      "id": "no_label",
+      "default": "No",
+      "label": "Screen reader text for ✗"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave blank to hide the button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": true,
+      "label": "Make section full width"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 52
+    }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature",
+          "default": "Feature",
+          "label": "Feature"
+        },
+        {
+          "type": "select",
+          "id": "value_1",
+          "options": [
+            { "value": "yes", "label": "✓ Yes" },
+            { "value": "no", "label": "✗ No" },
+            { "value": "text", "label": "Custom text" }
+          ],
+          "default": "yes",
+          "label": "Column 1"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "Column 1 custom text",
+          "info": "Shown when Column 1 is set to Custom text."
+        },
+        {
+          "type": "select",
+          "id": "value_2",
+          "options": [
+            { "value": "yes", "label": "✓ Yes" },
+            { "value": "no", "label": "✗ No" },
+            { "value": "text", "label": "Custom text" }
+          ],
+          "default": "no",
+          "label": "Column 2"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Column 2 custom text",
+          "info": "Shown when Column 2 is set to Custom text."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Nookly comparison table",
+      "blocks": [
+        { "type": "row" },
+        { "type": "row" },
+        { "type": "row", "settings": { "value_2": "text", "text_2": "Sometimes" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

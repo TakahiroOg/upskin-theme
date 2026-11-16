@@ -1,0 +1,74 @@
+{%- doc -%}
+  Renders a product media modal.
+
+  @param {string[]} variant_images - Image URLs for product images associated with a variant.
+  @param {product} [product] - The product whose media is rendered. Uses the current product when omitted.
+  @param {object} [section] - The current product section context, supplied implicitly when rendered from that section and used for gallery IDs, behavior, and presentation.
+
+  When `section.settings.cover_image` is set, it is rendered first with `data-media-id="cover"`.
+
+  @example
+  {% render 'product-media-modal', product: product, variant_images: variant_images %}
+{%- enddoc -%}
+
+<product-modal id="ProductModal-{{ section.id }}" class="product-media-modal media-modal">
+  <div
+    class="product-media-modal__dialog color-{{ section.settings.color_scheme }} gradient"
+    role="dialog"
+    aria-label="{{ 'products.modal.label' | t }}"
+    aria-modal="true"
+    tabindex="-1"
+  >
+    <button
+      id="ModalClose-{{ section.id }}"
+      type="button"
+      class="product-media-modal__toggle"
+      aria-label="{{ 'accessibility.close' | t }}"
+    >
+      {{ 'icon-close.svg' | inline_asset_content }}
+    </button>
+
+    <div
+      class="product-media-modal__content color-{{ section.settings.color_scheme }} gradient"
+      role="document"
+      aria-label="{{ 'products.modal.label' | t }}"
+      tabindex="0"
+    >
+      {%- if section.settings.cover_image != blank -%}
+        {%- assign cover_image = section.settings.cover_image -%}
+        <img
+          class="global-media-settings global-media-settings--no-shadow"
+          src="{{ cover_image | image_url: width: 1445 }}"
+          srcset="{{ cover_image | image_url: width: 1100 }} 1100w, {{ cover_image | image_url: width: 1445 }} 1445w, {{ cover_image | image_url: width: 2048 }} 2048w"
+          sizes="(min-width: 750px) calc(100vw - 22rem), 1100px"
+          alt="{{ cover_image.alt | default: product.title | escape }}"
+          loading="lazy"
+          width="1100"
+          height="{{ 1100 | divided_by: cover_image.aspect_ratio | ceil }}"
+          data-media-id="cover"
+        >
+      {%- endif -%}
+
+      {%- liquid
+        if product.selected_or_first_available_variant.featured_media != null
+          assign media = product.selected_or_first_available_variant.featured_media
+          render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: section.settings.hide_variants
+        endif
+      -%}
+
+      {%- for media in product.media -%}
+        {%- liquid
+          if section.settings.hide_variants and variant_images contains media.src or variant_images contains media.id
+            assign variant_image = true
+          else
+            assign variant_image = false
+          endif
+
+          unless media.id == product.selected_or_first_available_variant.featured_media.id
+            render 'product-media', media: media, loop: section.settings.enable_video_looping, variant_image: variant_image
+          endunless
+        -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</product-modal>

@@ -1,0 +1,288 @@
+{% comment %}
+  Section contract.
+  Image beside an eyebrow, heading, intro and a list of feature items. Used twice on
+  templates/product.facelift-device.json: "How it works" (plain list) and "4 steps" (numbered).
+  @example
+  <!-- Add "Facelift feature split", set an image, then add "Feature" blocks (title + text) -->
+{% endcomment %}
+
+{%- liquid
+  assign image = section.settings.image
+  assign text_first = false
+  if section.settings.layout == 'text_first'
+    assign text_first = true
+  endif
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="facelift-split section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <div class="facelift-split__grid{% if text_first %} facelift-split__grid--reverse{% endif %}">
+      <div class="facelift-split__media">
+        {%- if image != blank -%}
+          {{
+            image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1400',
+              sizes: '(min-width: 1200px) 560px, (min-width: 750px) 45vw, calc(100vw - 3rem)',
+              alt: image.alt
+          }}
+        {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="facelift-split__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="facelift-split__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="facelift-split__heading h1 inline-richtext">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="facelift-split__text rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- if section.blocks.size > 0 -%}
+          <ol class="facelift-split__list{% if section.settings.numbered %} facelift-split__list--numbered{% endif %}">
+            {%- for block in section.blocks -%}
+              <li class="facelift-split__item" {{ block.shopify_attributes }}>
+                {%- if section.settings.numbered -%}
+                  <span class="facelift-split__number" aria-hidden="true">{{ forloop.index }}</span>
+                {%- endif -%}
+                <div class="facelift-split__item-body">
+                  {%- if block.settings.title != blank -%}
+                    <h3 class="facelift-split__item-title">{{ block.settings.title | escape }}</h3>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <p class="facelift-split__item-text">{{ block.settings.text | escape }}</p>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .facelift-split__grid {
+    display: grid;
+    gap: 2.4rem;
+    align-items: center;
+  }
+
+  .facelift-split__media {
+    min-width: 0;
+    border-radius: 2rem;
+    overflow: hidden;
+    background: rgba(var(--color-foreground), 0.05);
+  }
+
+  .facelift-split__media img,
+  .facelift-split__media svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .facelift-split__content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.6rem;
+  }
+
+  .facelift-split__eyebrow {
+    margin: 0;
+    font-size: 1.2rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .facelift-split__heading,
+  .facelift-split__text {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .facelift-split__list {
+    display: grid;
+    gap: 0;
+    width: 100%;
+    margin: 0.8rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .facelift-split__item {
+    display: flex;
+    gap: 1.6rem;
+    align-items: flex-start;
+    padding-block: 1.6rem;
+    border-block-start: 1px solid rgba(var(--color-foreground), 0.15);
+  }
+
+  .facelift-split__item:last-child {
+    border-block-end: 1px solid rgba(var(--color-foreground), 0.15);
+  }
+
+  .facelift-split__number {
+    flex: none;
+    display: grid;
+    place-items: center;
+    inline-size: 3.2rem;
+    block-size: 3.2rem;
+    border-radius: 50%;
+    background: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .facelift-split__item-body {
+    min-width: 0;
+  }
+
+  .facelift-split__item-title {
+    margin: 0 0 0.4rem;
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+
+  .facelift-split__item-text {
+    margin: 0;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  @media screen and (min-width: 750px) {
+    .facelift-split__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 6rem;
+    }
+
+    .facelift-split__grid--reverse .facelift-split__media {
+      order: 2;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Facelift feature split",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Describe this feature in one or two sentences."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "image_first", "label": "Image first" },
+        { "value": "text_first", "label": "Text first" }
+      ],
+      "default": "image_first"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "How it works"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Section heading"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Add a short introduction.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "numbered",
+      "label": "Number the items",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-facelift-white"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 52
+    }
+  ],
+  "presets": [
+    {
+      "name": "Facelift feature split",
+      "blocks": [{ "type": "feature" }, { "type": "feature" }, { "type": "feature" }]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,338 @@
+{% comment %}
+  Nookly: before / after comparison section (new, for templates/product.facelift-device.json).
+  Left: a draggable before/after image slider. Right: a heading, short review cards and an optional link.
+  Review cards are only shown when you fill them in, so no placeholder reviews ever go live.
+  Styles live in assets/facelift.css.
+{% endcomment %}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="facelift-ba section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <div class="facelift-ba__grid{% if section.settings.layout == 'text_first' %} facelift-ba__grid--reverse{% endif %}">
+      <before-after-slider class="facelift-ba__media" style="--facelift-ba-pos: {{ section.settings.start_position }}%;">
+        <div class="facelift-ba__frame">
+          {%- if section.settings.after_image != blank -%}
+            {{
+              section.settings.after_image
+              | image_url: width: 1400
+              | image_tag:
+                widths: '360, 535, 750, 1070, 1400',
+                sizes: '(min-width: 1200px) 560px, (min-width: 750px) 45vw, 100vw',
+                loading: 'lazy',
+                class: 'facelift-ba__img facelift-ba__img--after',
+                alt: section.settings.after_alt
+            }}
+          {%- else -%}
+            <div class="facelift-ba__img facelift-ba__img--after facelift-ba__placeholder placeholder">
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+          <div class="facelift-ba__before-clip">
+            {%- if section.settings.before_image != blank -%}
+              {{
+                section.settings.before_image
+                | image_url: width: 1400
+                | image_tag:
+                  widths: '360, 535, 750, 1070, 1400',
+                  sizes: '(min-width: 1200px) 560px, (min-width: 750px) 45vw, 100vw',
+                  loading: 'lazy',
+                  class: 'facelift-ba__img facelift-ba__img--before',
+                  alt: section.settings.before_alt
+              }}
+            {%- else -%}
+              <div class="facelift-ba__img facelift-ba__img--before facelift-ba__placeholder placeholder">
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.before_label != blank -%}
+            <span class="facelift-ba__label facelift-ba__label--before">{{ section.settings.before_label | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.after_label != blank -%}
+            <span class="facelift-ba__label facelift-ba__label--after">{{ section.settings.after_label | escape }}</span>
+          {%- endif -%}
+          <span class="facelift-ba__handle" aria-hidden="true">
+            <span class="facelift-ba__knob">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+          <input
+            class="facelift-ba__range"
+            type="range"
+            min="0"
+            max="100"
+            step="0.1"
+            value="{{ section.settings.start_position }}"
+            aria-label="{{ section.settings.slider_label | escape }}"
+          >
+        </div>
+      </before-after-slider>
+
+      <div class="facelift-ba__content">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <h2 class="facelift-ba__heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                {{ block.settings.heading }}
+              </h2>
+            {%- when 'text' -%}
+              <div class="facelift-ba__text rte" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+            {%- when 'review' -%}
+              {%- if block.settings.quote != blank -%}
+                <figure class="facelift-ba__review" {{ block.shopify_attributes }}>
+                  <div
+                    class="facelift-stars"
+                    role="img"
+                    aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: block.settings.rating, rating_max: 5 }}"
+                    style="--facelift-rating: {{ block.settings.rating }};"
+                  ></div>
+                  <blockquote class="facelift-ba__quote">&ldquo;{{ block.settings.quote | escape }}&rdquo;</blockquote>
+                  {%- if block.settings.author != blank -%}
+                    <figcaption class="facelift-ba__author">{{ block.settings.author | escape }}</figcaption>
+                  {%- endif -%}
+                </figure>
+              {%- endif -%}
+            {%- when 'link' -%}
+              {%- if block.settings.label != blank -%}
+                <a
+                  {% if block.settings.url != blank %}
+                    href="{{ block.settings.url }}"
+                  {% else %}
+                    role="link" aria-disabled="true"
+                  {% endif %}
+                  class="facelift-ba__link link underlined-link"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.label | escape }}
+                </a>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (!customElements.get('before-after-slider')) {
+    customElements.define(
+      'before-after-slider',
+      class BeforeAfterSlider extends HTMLElement {
+        connectedCallback() {
+          const range = this.querySelector('.facelift-ba__range');
+          if (!range) return;
+          const update = () => this.style.setProperty('--facelift-ba-pos', range.value + '%');
+          range.addEventListener('input', update);
+          update();
+        }
+      }
+    );
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Facelift before / after",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "info": "Use italics for the serif accent, e.g. Sparse to full <em>in one press</em>",
+          "default": "Sparse to full <em>in one press</em>"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Size",
+          "options": [
+            { "value": "h1", "label": "Large" },
+            { "value": "h2", "label": "Medium" }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add a short line about the result.</p>"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review card",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "info": "Use a real customer review only. Cards with an empty quote are hidden."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Customer name"
+        }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Link",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Read all reviews"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "For example #reviews to jump to the reviews section."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "text",
+      "id": "before_alt",
+      "label": "Before image description",
+      "default": "Face before using the device"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image"
+    },
+    {
+      "type": "text",
+      "id": "after_alt",
+      "label": "After image description",
+      "default": "Face after one session with the device"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "One session later"
+    },
+    {
+      "type": "range",
+      "id": "start_position",
+      "label": "Slider start position",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "slider_label",
+      "label": "Slider accessibility label",
+      "default": "Drag to compare before and after"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop layout",
+      "options": [
+        { "value": "image_first", "label": "Image first" },
+        { "value": "text_first", "label": "Text first" }
+      ],
+      "default": "image_first"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-facelift-blush"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 52
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 52
+    }
+  ],
+  "presets": [
+    {
+      "name": "Facelift before / after"
+    }
+  ]
+}
+{% endschema %}

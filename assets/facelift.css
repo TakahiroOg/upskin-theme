@@ -1,0 +1,1118 @@
+/*
+ * Facelift design layer (navy / cream / yellow).
+ * Loaded only by layout/theme.facelift.liquid (used by templates/product.facelift-device.json),
+ * on top of nookly-deskwarm.css. Everything is scoped to body.facelift, so no other template is affected.
+ * Colours come from the theme colour schemes (scheme-facelift-*); this file only adds the accents.
+ */
+
+/*
+ * Lausanne (TWK Lausanne) is a licensed font and is not bundled with the theme.
+ * Upload your licensed files to assets/ with these exact names and it is used everywhere on the page:
+ *   lausanne-regular.woff2 (400), lausanne-medium.woff2 (500), lausanne-semibold.woff2 (600)
+ * Until the files exist, the theme's current font (Inter) is used as the fallback.
+ */
+@font-face {
+  font-family: 'Lausanne';
+  src: url('lausanne-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lausanne';
+  src: url('lausanne-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lausanne';
+  src: url('lausanne-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+body.facelift {
+  --font-body-family: 'Lausanne', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-heading-family: 'Lausanne', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --facelift-berry: #111111;
+  --facelift-pink: #111111;
+  --facelift-star: #f5a623;
+  --facelift-green: #1b7f3b;
+  --facelift-line: rgba(17, 17, 17, 0.18);
+  --facelift-brand: #c2255c;
+  --facelift-brand-tint: #fdf0f5;
+  --facelift-heading: #1c2b2a;
+  --facelift-text: #2e3835;
+  --facelift-serif: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+}
+
+/* ---------- Emphasis (plain, no serif) inside headings: "Even, full brows <em>in one session.</em>" ---------- */
+
+body.facelift :is(h1, h2, h3, .h0, .h1, .h2, .h3) em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
+/* Buttons: sentence case, like the reference */
+body.facelift :is(.button, .shopify-challenge__button, .customer button, .shopify-payment-button__button--unbranded) {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ---------- Star rating (reviews, before/after cards) ---------- */
+
+body.facelift .facelift-stars {
+  --facelift-star-size: 1.5rem;
+  display: inline-block;
+  font-size: var(--facelift-star-size);
+  line-height: 1;
+  letter-spacing: 0.1em;
+  font-family: Times, serif;
+}
+
+body.facelift .facelift-stars::before {
+  content: '★★★★★';
+  background: linear-gradient(
+    90deg,
+    var(--facelift-star) calc(var(--facelift-rating, 5) / 5 * 100%),
+    rgba(17, 17, 17, 0.2) calc(var(--facelift-rating, 5) / 5 * 100%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ---------- Product block ---------- */
+
+body.facelift .rating-wrapper {
+  margin: 0;
+}
+
+body.facelift .rating-wrapper .rating-star {
+  --color-rating-star: var(--facelift-star);
+}
+
+body.facelift .product__title .h1,
+body.facelift .product__title h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+body.facelift .facelift-product-heading {
+  margin: 0;
+  /* 28px on mobile, growing to 37px on desktop (1rem = 10px) */
+  font-size: clamp(2.8rem, 0.87rem + 2.57vw, 3.7rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+/* Headings: medium weight across the facelift page */
+body.facelift :is(h1, h2, h3, .h0, .h1, .h2, .h3) {
+  font-weight: 500;
+}
+
+/* Text colours inside the product section: headings and body copy */
+body.facelift product-info :is(h1, h2, h3, h4, .h0, .h1, .h2, .h3, .h4) {
+  color: var(--facelift-heading);
+}
+
+body.facelift product-info :is(p, li, .product__text, .facelift-kits__sub, .facelift-kits__was) {
+  color: var(--facelift-text);
+}
+
+body.facelift .product__info-container .product__text.subtitle {
+  font-size: 1.7rem;
+  line-height: 1.5;
+}
+
+/* Checklist with ticks */
+
+body.facelift .facelift-checklist ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.facelift .facelift-checklist li {
+  position: relative;
+  padding-left: 2.8rem;
+  font-weight: 500;
+}
+
+body.facelift .facelift-checklist li + li {
+  margin-top: 0.8rem;
+}
+
+body.facelift .facelift-checklist li p {
+  margin: 0;
+}
+
+body.facelift .facelift-checklist li::before {
+  /* single check mark in the accent colour, no circle */
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: var(--facelift-brand);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 12.8l5 5L19.5 6.5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.5 12.8l5 5L19.5 6.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Option legends and pills */
+
+body.facelift .product-form__input--swatch .form__label,
+body.facelift .product-form__input--pill .form__label {
+  font-weight: 600;
+}
+
+body.facelift .product-form__input--pill {
+  margin: 0;
+}
+
+/* ---------- Kit cards ("How many would you like?") ---------- */
+
+body.facelift .product-form__input--kits {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+body.facelift .facelift-kits__legend {
+  display: block;
+  margin: 0 0 1.4rem;
+  padding: 0;
+  font-family: var(--font-heading-family);
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--facelift-heading);
+}
+
+body.facelift .facelift-kits__list {
+  display: grid;
+  grid-auto-rows: 1fr; /* every card gets the height of the tallest one */
+  gap: 2rem;
+}
+
+body.facelift .facelift-kits__item {
+  position: relative;
+  display: flex;
+}
+
+/* the real radio stays in the page for keyboard use, price updates and Add to cart */
+body.facelift .facelift-kits__item input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.facelift .facelift-kits__card {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 10rem;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 1.2rem;
+  padding: 1.4rem 1.6rem;
+  border: 0.15rem solid var(--facelift-line);
+  border-radius: 1.4rem;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  color: var(--facelift-text);
+}
+
+body.facelift .facelift-kits__item input[type='radio']:checked + .facelift-kits__card {
+  border-color: var(--facelift-brand);
+  box-shadow: 0 0 0 0.1rem var(--facelift-brand);
+  background: var(--facelift-brand-tint);
+}
+
+body.facelift .facelift-kits__item input[type='radio']:focus-visible + .facelift-kits__card {
+  outline: 0.3rem solid var(--facelift-brand);
+  outline-offset: 0.3rem;
+}
+
+body.facelift .facelift-kits__item input[type='radio']:disabled + .facelift-kits__card,
+body.facelift .facelift-kits__item input[type='radio'].disabled + .facelift-kits__card {
+  opacity: 0.55;
+}
+
+body.facelift .facelift-kits__radio {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0.2rem solid var(--facelift-brand);
+  border-radius: 50%;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+body.facelift .facelift-kits__item input[type='radio']:checked + .facelift-kits__card .facelift-kits__radio {
+  background: radial-gradient(circle, var(--facelift-brand) 0 42%, #fff 46%);
+}
+
+body.facelift .facelift-kits__thumb {
+  display: block;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+body.facelift .facelift-kits__thumb img,
+body.facelift .facelift-kits__thumb svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.facelift .facelift-kits__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+body.facelift .facelift-kits__title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--facelift-heading);
+}
+
+body.facelift .facelift-kits__save {
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--facelift-brand);
+}
+
+body.facelift .facelift-kits__sub {
+  font-size: 1.4rem;
+  line-height: 1.3;
+  opacity: 0.8;
+}
+
+body.facelift .facelift-kits__prices {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  gap: 0;
+  white-space: nowrap;
+}
+
+body.facelift .facelift-kits__was {
+  font-size: 1.4rem;
+  opacity: 0.65;
+}
+
+body.facelift .facelift-kits__now {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--facelift-heading);
+}
+
+body.facelift .facelift-kits__badge {
+  position: absolute;
+  top: -1.1rem;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  padding: 0.3rem 1.2rem;
+  border-radius: 10rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--facelift-brand);
+  color: #fff;
+}
+
+[dir='rtl'] body.facelift .facelift-kits__badge {
+  transform: translateX(50%);
+}
+
+@media screen and (max-width: 749px) {
+  body.facelift .facelift-kits__card {
+    column-gap: 1rem;
+    padding: 1.2rem;
+  }
+
+  body.facelift .facelift-kits__thumb {
+    width: 4.6rem;
+    height: 4.6rem;
+  }
+}
+
+/* ---------- Add to cart, payments, trust badges ---------- */
+
+body.facelift .product-form__submit {
+  min-height: 5.6rem;
+  font-size: 1.7rem;
+  font-weight: 800;
+}
+
+body.facelift .facelift-payments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+body.facelift .facelift-payments__secure {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+body.facelift .facelift-payments__secure .svg-wrapper {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+body.facelift .facelift-payments__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Mobile: keep all payment icons on a single row by letting them shrink with the screen */
+@media screen and (max-width: 749px) {
+  body.facelift .facelift-payments__list {
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    width: 100%;
+  }
+
+  body.facelift .facelift-payments__list .list-payment__item {
+    flex: 0 1 3.8rem;
+    min-width: 0;
+  }
+
+  body.facelift .facelift-payments__list .icon {
+    width: 100%;
+    height: auto;
+  }
+}
+
+body.facelift .facelift-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1.6rem;
+  margin: 0;
+  padding: 1.8rem 1.6rem;
+  list-style: none;
+  border-radius: 1.8rem;
+  background: #fafafa;
+}
+
+/* Each badge shares the row equally, so two badges stretch across the full width.
+   Icon on the left, text on the right. */
+body.facelift .facelift-trust__item {
+  display: flex;
+  flex: 1 1 15rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-width: 0;
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+body.facelift .facelift-trust__item .svg-wrapper {
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+/* ---------- Before / after ---------- */
+
+body.facelift .facelift-ba__grid {
+  display: grid;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 750px) {
+  body.facelift .facelift-ba__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6rem;
+  }
+
+  body.facelift .facelift-ba__grid--reverse .facelift-ba__media {
+    order: 2;
+  }
+}
+
+body.facelift .facelift-ba__media {
+  display: block;
+}
+
+body.facelift .facelift-ba__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 2.4rem;
+  overflow: hidden;
+  background: #e9e4d6;
+  touch-action: pan-y;
+}
+
+body.facelift .facelift-ba__img,
+body.facelift .facelift-ba__img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.facelift .facelift-ba__before-clip {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 calc(100% - var(--facelift-ba-pos, 50%)) 0 0);
+}
+
+body.facelift .facelift-ba__label {
+  position: absolute;
+  top: 1.4rem;
+  padding: 0.4rem 1rem;
+  border-radius: 10rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1.4;
+  pointer-events: none;
+}
+
+body.facelift .facelift-ba__label--before {
+  left: 1.4rem;
+  background: #fff;
+  color: var(--facelift-berry);
+}
+
+body.facelift .facelift-ba__label--after {
+  right: 1.4rem;
+  background: var(--facelift-pink);
+  color: var(--facelift-berry);
+}
+
+body.facelift .facelift-ba__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--facelift-ba-pos, 50%);
+  width: 0.3rem;
+  margin-left: -0.15rem;
+  background: #fff;
+  pointer-events: none;
+}
+
+body.facelift .facelift-ba__knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--facelift-berry);
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.25);
+}
+
+body.facelift .facelift-ba__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+body.facelift .facelift-ba__frame:focus-within {
+  outline: 0.3rem solid var(--facelift-berry);
+  outline-offset: 0.3rem;
+}
+
+body.facelift .facelift-ba__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.6rem;
+}
+
+body.facelift .facelift-ba__heading {
+  margin: 0;
+}
+
+body.facelift .facelift-ba__review {
+  width: 100%;
+  margin: 0;
+  padding: 1.8rem 2rem;
+  border-radius: 1.4rem;
+  background: #ececec;
+  border: 0.1rem solid rgba(17, 17, 17, 0.08);
+}
+
+body.facelift .facelift-ba__quote {
+  margin: 0.8rem 0 0;
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+body.facelift .facelift-ba__author {
+  margin-top: 0.8rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+body.facelift .facelift-ba__link {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* ---------- Narrower content blocks for the image grids (section keys in product.facelift-device.json) ---------- */
+
+body.facelift #shopify-section-made-to-look .page-width,
+body.facelift #shopify-section-good-to-know .page-width {
+  max-width: 92rem;
+}
+
+body.facelift #shopify-section-how-to-use .page-width {
+  max-width: 98rem;
+}
+
+body.facelift .nookly-mc .multicolumn-card__info {
+  text-align: left;
+}
+
+body.facelift .nookly-mc--cards .multicolumn-card__info {
+  text-align: left;
+}
+
+body.facelift .nookly-mc--cards .multicolumn-card__info h3 {
+  margin-top: 0;
+}
+
+body.facelift .nookly-mc .multicolumn__title {
+  text-align: center;
+  justify-content: center;
+}
+
+body.facelift .nookly-mc .multicolumn-card__image-wrapper .media {
+  border-radius: 1.6rem;
+}
+
+/* ---------- Accordion columns ---------- */
+
+body.facelift .facelift-acc__grid {
+  display: grid;
+  gap: 3.2rem;
+}
+
+@media screen and (min-width: 750px) {
+  body.facelift .facelift-acc__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6rem;
+  }
+}
+
+body.facelift .facelift-acc__eyebrow {
+  margin: 0 0 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-body-family);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body.facelift .facelift-acc__eyebrow::before {
+  content: '';
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--facelift-pink);
+}
+
+body.facelift .facelift-acc__row {
+  border: 0;
+  border-bottom: 0.1rem solid var(--facelift-line);
+}
+
+body.facelift .facelift-acc__row summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  padding: 1.8rem 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+body.facelift .facelift-acc__row summary::-webkit-details-marker {
+  display: none;
+}
+
+body.facelift .facelift-acc__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+body.facelift .facelift-acc__icon {
+  position: relative;
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+body.facelift .facelift-acc__icon::before,
+body.facelift .facelift-acc__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 0.2rem;
+  margin-top: -0.1rem;
+  background: currentColor;
+}
+
+body.facelift .facelift-acc__icon::after {
+  transform: rotate(90deg);
+}
+
+body.facelift .facelift-acc__row details[open] .facelift-acc__icon::after {
+  transform: none;
+}
+
+body.facelift .facelift-acc__row .accordion__content {
+  padding: 0 0 1.8rem;
+}
+
+/* ---------- Reviews ---------- */
+
+body.facelift .facelift-reviews__heading {
+  margin: 0 0 3.2rem;
+  text-align: center;
+}
+
+body.facelift .facelift-reviews__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3.2rem;
+}
+
+body.facelift .facelift-reviews__score {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+body.facelift .facelift-reviews__avg {
+  font-size: 4.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+body.facelift .facelift-reviews__count {
+  margin: 0.4rem 0 0;
+  font-size: 1.4rem;
+}
+
+body.facelift .facelift-reviews__list {
+  display: grid;
+  gap: 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (min-width: 750px) {
+  body.facelift .facelift-reviews__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+body.facelift .facelift-review {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 2.4rem;
+  border-radius: 1.6rem;
+  background: #fff;
+  box-shadow: 0 0.1rem 0.8rem rgba(17, 17, 17, 0.08);
+}
+
+body.facelift .facelift-review__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+body.facelift .facelift-review__verified {
+  padding: 0.2rem 0.8rem;
+  border-radius: 10rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: #eef1fb;
+}
+
+body.facelift .facelift-review__title {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+body.facelift .facelift-review__body {
+  font-size: 1.5rem;
+}
+
+body.facelift .facelift-review__footer {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: auto;
+}
+
+body.facelift .facelift-review__photo {
+  width: 7.2rem;
+  height: 7.2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+body.facelift .facelift-review__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.facelift .facelift-review__author {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+body.facelift .facelift-reviews__app {
+  margin-bottom: 2.4rem;
+}
+
+body.facelift .facelift-reviews__empty {
+  padding: 2rem;
+  border: 0.1rem dashed var(--facelift-line);
+  border-radius: 1.2rem;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+/* ---------- Colour swatches read from the custom.color metafield ---------- */
+
+body.facelift .facelift-colors__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+body.facelift .facelift-colors__list input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.facelift .facelift-colors__swatch {
+  display: block;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: var(--facelift-swatch, #ccc);
+  box-shadow: inset 0 0 0 0.1rem rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+body.facelift .facelift-colors__swatch--square {
+  border-radius: 0.8rem;
+}
+
+body.facelift .facelift-colors__list input[type='radio']:checked + .facelift-colors__swatch {
+  outline: 0.2rem solid var(--facelift-berry);
+  outline-offset: 0.3rem;
+}
+
+body.facelift .facelift-colors__list input[type='radio']:focus-visible + .facelift-colors__swatch {
+  outline: 0.3rem solid var(--facelift-berry);
+  outline-offset: 0.3rem;
+}
+
+body.facelift .facelift-colors__list input[type='radio'].disabled + .facelift-colors__swatch {
+  opacity: 0.4;
+}
+
+/* ---------- Product gallery: square corners, no top gap on mobile ---------- */
+
+body.facelift .product__media-wrapper {
+  --media-radius: 0rem;
+}
+
+body.facelift .product__media-wrapper :is(.global-media-settings, .global-media-settings img, .product-media-container, .product__media, .media, .thumbnail, .thumbnail img, .product__media-toggle, .deferred-media__poster, video, model-viewer),
+body.facelift .product__media-wrapper .global-media-settings::after {
+  border-radius: 0;
+}
+
+@media screen and (max-width: 749px) {
+  body.facelift product-info[class*='section-'] {
+    padding-top: 0;
+  }
+
+  body.facelift .product__media-wrapper {
+    padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+/* ---------- Mobile: full-width, edge-to-edge product image ---------- */
+
+@media screen and (max-width: 749px) {
+  body.facelift product-info .page-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  body.facelift product-info .product.grid {
+    margin: 0;
+    width: 100%;
+    row-gap: 0;
+  }
+
+  body.facelift .product__media-wrapper,
+  body.facelift .product__info-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  body.facelift .product__media-wrapper {
+    padding: 0;
+    margin: 0;
+  }
+
+  body.facelift .product__info-wrapper {
+    padding: 2rem 1.5rem 0;
+  }
+
+  body.facelift .product__media-wrapper slider-component,
+  body.facelift .product__media-wrapper slider-component:not(.thumbnail-slider--no-slide) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  body.facelift .product__media-wrapper .product__media-list {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+/* Mobile gallery slider: one slide = full width, no peeking neighbour, no gaps */
+@media screen and (max-width: 749px) {
+  body.facelift .product__media-wrapper .product__media-list {
+    gap: 0;
+    column-gap: 0;
+    row-gap: 0;
+    padding: 0;
+    scroll-padding: 0;
+  }
+
+  body.facelift .product__media-wrapper .product__media-list .product__media-item {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body.facelift .product__media-wrapper .product__media-list .product-media-container {
+    width: 100%;
+  }
+}
+
+/* "Made to look like your brows": on mobile show a small square image on the left and larger text on the right */
+@media screen and (max-width: 749px) {
+  body.facelift #shopify-section-made-to-look .multicolumn-card {
+    display: grid;
+    grid-template-columns: 24% minmax(0, 1fr);
+    column-gap: 2rem;
+    align-items: center;
+    padding: 0;
+  }
+
+  body.facelift #shopify-section-made-to-look .multicolumn-card__image-wrapper,
+  body.facelift #shopify-section-made-to-look .multicolumn-card__image-wrapper.multicolumn-card-spacing {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  body.facelift #shopify-section-made-to-look .multicolumn-card__image-wrapper .media {
+    padding-bottom: 100%;
+    border-radius: 1.6rem;
+    overflow: hidden;
+  }
+
+  body.facelift #shopify-section-made-to-look .multicolumn-card__info {
+    padding: 0;
+    margin: 0;
+    text-align: left;
+  }
+
+  body.facelift #shopify-section-made-to-look .multicolumn-card__info .rte,
+  body.facelift #shopify-section-made-to-look .multicolumn-card__info p {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.4;
+  }
+
+  body.facelift #shopify-section-made-to-look .multicolumn-list {
+    row-gap: 2.8rem;
+  }
+}
+
+/* ---------- Add to cart: softly rounded (like the reference), no hover effect ---------- */
+
+body.facelift {
+  --facelift-atc-radius: 1.2rem;
+}
+
+body.facelift .product-form__submit.button.button,
+body.facelift .product-form__submit.button.button::before,
+body.facelift .product-form__submit.button.button::after {
+  border-radius: var(--facelift-atc-radius);
+}
+
+body.facelift .product-form__submit.button.button,
+body.facelift .product-form__submit.button.button:not([disabled]):hover,
+body.facelift .product-form__submit.button.button:not([disabled]):active {
+  transform: none;
+  transition: none;
+}
+
+body.facelift .product-form__submit.button.button:not([disabled]):hover::after {
+  --border-offset: 0px;
+  transition: none;
+}
+
+/* ---------- Add to cart: uppercase, no shadow ---------- */
+
+body.facelift .product-form__submit.button.button {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: none;
+}
+
+body.facelift .product-form__submit.button.button::before {
+  box-shadow: none;
+}
+
+/* Keep a visible keyboard focus without using a shadow */
+body.facelift .product-form__submit.button.button:focus-visible {
+  box-shadow: none;
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 3px;
+}
+
+/* ---------- Product gallery: dots instead of arrows and counter (mobile) ---------- */
+
+body.facelift .slider-buttons--dots {
+  display: none;
+}
+
+body.facelift .facelift-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-block-start: 1.2rem;
+}
+
+body.facelift .facelift-dots[hidden] {
+  display: none;
+}
+
+body.facelift .facelift-dots__dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(28, 43, 42, 0.3);
+  cursor: pointer;
+  /* larger touch target without changing the dot size */
+  outline-offset: 0.4rem;
+}
+
+body.facelift .facelift-dots__dot::before {
+  content: '';
+  position: absolute;
+  inset: -0.8rem -0.4rem;
+}
+
+body.facelift .facelift-dots__dot {
+  position: relative;
+}
+
+body.facelift .facelift-dots__dot[aria-current='true'] {
+  background: var(--facelift-heading);
+}
+
+@media screen and (min-width: 750px) {
+  body.facelift .facelift-dots {
+    display: none;
+  }
+}
