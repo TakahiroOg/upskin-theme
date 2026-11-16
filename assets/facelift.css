@@ -110,7 +110,11 @@ body.facelift .product__title h1 {
 
 body.facelift .facelift-product-heading {
   margin: 0;
-  /* 28px on mobile, growing to 37px on desktop (1rem = 10px) */
+}
+
+/* Shared large heading: the product heading and the three headings below the product
+   ("Real skin...", "Your facial gym...", "Your lifting routine..."). 28px on mobile, up to 37px on desktop (1rem = 10px). */
+body.facelift .facelift-heading-lg {
   font-size: clamp(2.8rem, 0.87rem + 2.57vw, 3.7rem);
   font-weight: 500;
   line-height: 1.2;
@@ -427,44 +431,64 @@ body.facelift .facelift-payments__list {
 }
 
 body.facelift .facelift-trust {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2rem 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
   margin: 0;
-  padding: 1.8rem 1.6rem;
+  padding: 1.8rem 1.2rem;
   list-style: none;
+  border: 0.15rem solid var(--facelift-line);
   border-radius: 1.8rem;
   background: #fafafa;
 }
 
-/* Each badge shares the row equally, so two badges stretch across the full width.
-   Icon on the left, text on the right. */
+/* Three columns: icon on top, text centred underneath */
 body.facelift .facelift-trust__item {
   display: flex;
-  flex: 1 1 15rem;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 0.8rem;
   min-width: 0;
-  text-align: left;
+  text-align: center;
   font-size: 1.3rem;
   font-weight: 500;
   line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 body.facelift .facelift-trust__item .svg-wrapper {
   flex: none;
   width: 2.4rem;
   height: 2.4rem;
+  color: var(--facelift-brand);
 }
 
-/* ---------- Before / after ---------- */
+body.facelift .facelift-trust__item .svg-wrapper svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+@media screen and (max-width: 749px) {
+  body.facelift .facelift-trust__item {
+    font-size: 1.2rem;
+  }
+}
+
+/* ---------- Image with text (two columns) ---------- */
 
 body.facelift .facelift-ba__grid {
   display: grid;
   gap: 2.4rem;
   align-items: center;
+}
+
+/* Mobile: text first, image below */
+@media screen and (max-width: 749px) {
+  body.facelift .facelift-ba__media {
+    order: 2;
+  }
 }
 
 @media screen and (min-width: 750px) {
@@ -483,92 +507,20 @@ body.facelift .facelift-ba__media {
 }
 
 body.facelift .facelift-ba__frame {
+  /* the image keeps its own proportions: no cropping, no rounded corners */
   position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 2.4rem;
-  overflow: hidden;
   background: #e9e4d6;
-  touch-action: pan-y;
 }
 
 body.facelift .facelift-ba__img,
 body.facelift .facelift-ba__img img {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 
-body.facelift .facelift-ba__before-clip {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(0 calc(100% - var(--facelift-ba-pos, 50%)) 0 0);
-}
-
-body.facelift .facelift-ba__label {
-  position: absolute;
-  top: 1.4rem;
-  padding: 0.4rem 1rem;
-  border-radius: 10rem;
-  font-size: 1.2rem;
-  font-weight: 800;
-  line-height: 1.4;
-  pointer-events: none;
-}
-
-body.facelift .facelift-ba__label--before {
-  left: 1.4rem;
-  background: #fff;
-  color: var(--facelift-berry);
-}
-
-body.facelift .facelift-ba__label--after {
-  right: 1.4rem;
-  background: var(--facelift-pink);
-  color: var(--facelift-berry);
-}
-
-body.facelift .facelift-ba__handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--facelift-ba-pos, 50%);
-  width: 0.3rem;
-  margin-left: -0.15rem;
-  background: #fff;
-  pointer-events: none;
-}
-
-body.facelift .facelift-ba__knob {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 4.4rem;
-  height: 4.4rem;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: #fff;
-  color: var(--facelift-berry);
-  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.25);
-}
-
-body.facelift .facelift-ba__range {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  opacity: 0;
-  cursor: ew-resize;
-}
-
-body.facelift .facelift-ba__frame:focus-within {
-  outline: 0.3rem solid var(--facelift-berry);
-  outline-offset: 0.3rem;
+body.facelift .facelift-ba__placeholder {
+  aspect-ratio: 4 / 5;
 }
 
 body.facelift .facelift-ba__content {

@@ -693,7 +693,7 @@
                 {%- when 'icon-with-text' -%}
                   {% render 'icon-with-text', block: block %}
                 {%- when 'heading' -%}
-                  <h2 class="facelift-product-heading inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  <h2 class="facelift-product-heading facelift-heading-lg inline-richtext {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
                     {{- block.settings.heading -}}
                   </h2>
                 {%- when 'checklist' -%}
@@ -2152,6 +2152,10 @@
               "label": "Return"
             },
             {
+              "value": "shield-check",
+              "label": "Shield with check"
+            },
+            {
               "value": "lock",
               "label": "Lock"
             },
@@ -2202,6 +2206,10 @@
               "label": "Return"
             },
             {
+              "value": "shield-check",
+              "label": "Shield with check"
+            },
+            {
               "value": "lock",
               "label": "Lock"
             },
@@ -2250,6 +2258,10 @@
             {
               "value": "return",
               "label": "Return"
+            },
+            {
+              "value": "shield-check",
+              "label": "Shield with check"
             },
             {
               "value": "lock",

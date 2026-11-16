@@ -74,11 +74,11 @@
           "type": "trust",
           "settings": {
             "icon_1": "truck",
-            "text_1": "Free shipping on offers",
-            "icon_2": "return",
-            "text_2": "60-day money-back guarantee",
+            "text_1": "Free Shipping",
+            "icon_2": "shield-check",
+            "text_2": "60-Day Money-Back Guarantee",
             "icon_3": "heart",
-            "text_3": "Skin-safe, gentle design"
+            "text_3": "Skin-Safe, Gentle Design"
           }
         }
       },
@@ -102,44 +102,25 @@
         "mobile_thumbnails": "hide",
         "media_position": "left",
         "image_zoom": "none",
-        "slider_dots": true,
         "cover_image": "shopify://shop_images/Warm_spa_facial_device_ritual.png",
+        "slider_dots": true,
         "hide_variants": false,
         "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
     },
-    "results": {
-      "type": "facelift-before-after",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Real skin. <em>Visible change.</em>",
-            "heading_size": "h1"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Used for a few minutes a day, the device helps the face look firmer, more defined and more lifted. Many people notice a difference in how their skin looks and feels after the very first session.</p><p>Results vary from person to person. Consistency is what makes the difference.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
+    "facelift_feature_split_aLmwe9": {
+      "type": "facelift-feature-split",
+      "name": "Facelift feature split",
       "settings": {
-        "before_alt": "Face before using the device",
-        "before_label": "Before",
-        "after_alt": "Face after consistent use of the device",
-        "after_label": "After",
-        "start_position": 50,
-        "slider_label": "Drag to compare before and after",
+        "image": "shopify://shop_images/Split-face_lift_and_define_comparison_fc96d4df-9429-41c5-b37b-5bf89100bd88.png",
         "layout": "image_first",
-        "color_scheme": "scheme-facelift-blush",
+        "eyebrow": "",
+        "heading": "Real skin. <em>Visible change.</em>",
+        "text": "<p>Used for a few minutes a day, the device helps the face look firmer, more defined and more lifted. Many people notice a difference in how their skin looks and feels after the very first session.</p><p>Results vary from person to person. Consistency is what makes the difference.</p>",
+        "numbered": false,
+        "color_scheme": "",
         "padding_top": 52,
         "padding_bottom": 52
       }
@@ -322,6 +303,7 @@
     },
     "reviews": {
       "type": "facelift-reviews",
+      "disabled": true,
       "settings": {
         "heading": "What our customers say",
         "heading_size": "h2",
@@ -337,7 +319,7 @@
   },
   "order": [
     "main",
-    "results",
+    "facelift_feature_split_aLmwe9",
     "how-it-works",
     "steps",
     "faq",
