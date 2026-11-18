@@ -22,14 +22,14 @@
         "text_dG9c6N": {
           "type": "text",
           "settings": {
-            "text": "<p>Meet the 5-minute Facelift Device, your facial gym at home. Gentle microcurrent trains the muscles beneath your skin, so your jawline, cheeks and brow look firmer, more defined and more lifted.</p><p>No appointments. No waiting rooms. Just a calming daily ritual that fits into your evening. Free shipping and a 60-day money-back guarantee, so you can try it with zero risk.</p>",
+            "text": "<p>Meet the <strong>Upskin Lift Mini</strong>, your facial gym at home. Gentle microcurrent trains the muscles beneath your skin, so your jawline, cheeks and brow look firmer, more defined and more lifted.</p><p>No appointments. No waiting rooms. Just a calming daily ritual that fits into your evening. Free shipping and a 60-day money-back guarantee, so you can try it with zero risk.</p>",
             "text_style": "body"
           }
         },
         "button_6BgUW9": {
           "type": "button",
           "settings": {
-            "button_label": "Shop the Facelift Device",
+            "button_label": "Shop Now",
             "button_link": "shopify://products/upskin-lift-mini",
             "button_style_secondary": false
           }
