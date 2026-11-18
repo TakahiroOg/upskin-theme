@@ -63,7 +63,8 @@
           "settings": {
             "show_dynamic_checkout": false,
             "show_gift_card_recipient": false,
-            "button_template": "Secure checkout"
+            "button_template": "Secure checkout",
+            "checkout_directly": true
           }
         },
         "payments": {
@@ -156,6 +157,7 @@
         "f3"
       ],
       "settings": {
+        "image": "shopify://shop_images/Pink_triangular_device_with_two_electrodes.png",
         "layout": "image_first",
         "eyebrow": "How it works",
         "heading": "Your facial gym, <em>at home.</em>",
@@ -205,6 +207,7 @@
         "s4"
       ],
       "settings": {
+        "image": "shopify://shop_images/image_6e15d2b.jpg",
         "layout": "text_first",
         "eyebrow": "Simple routine",
         "heading": "Your lifting routine in <em>4 steps.</em>",
@@ -279,7 +282,7 @@
           "type": "row",
           "settings": {
             "heading": "How long does shipping take?",
-            "content": "<p>Orders ship within 1 to 2 business days, and you will receive tracking as soon as your package is on its way.</p>",
+            "content": "<p>Orders ship within 1–2 business days. You’ll receive a tracking number as soon as your package is on its way.</p><p>Estimated delivery time is 7–15 days after dispatch.</p>",
             "page": "",
             "open": false
           }

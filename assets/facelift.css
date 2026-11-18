@@ -136,8 +136,8 @@ body.facelift product-info :is(p, li, .product__text, .facelift-kits__sub, .face
 }
 
 body.facelift .product__info-container .product__text.subtitle {
-  font-size: 1.7rem;
-  line-height: 1.5;
+  font-size: 1.6rem;
+  line-height: 1.3;
 }
 
 /* Checklist with ticks */

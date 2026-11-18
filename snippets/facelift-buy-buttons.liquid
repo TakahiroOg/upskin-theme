@@ -9,6 +9,7 @@
   @param {string} section_id - The section ID used to namespace the form and submit button.
   @param {string} [kit_option_name] - Name of the product option that holds the kit sizes (e.g. "Kits").
   @param {string} [button_template] - Button text with [kit] and [price] placeholders, e.g. "Add [kit] to cart · [price]".
+  @param {boolean} [checkout_directly] - When true, a successful add sends the customer straight to /checkout, skipping the cart drawer, notification and cart page.
   @param {boolean} [show_pickup_availability] - Whether to render pickup availability. Defaults to `false`.
   @param {object} [section] - The current section context, supplied implicitly when rendered from a section and used for IDs and pickup-availability colors.
 
@@ -33,6 +34,9 @@
       class="product-form"
       data-hide-errors="{{ gift_card_recipient_feature_active }}"
       data-section-id="{{ section.id }}"
+      {% if checkout_directly %}
+        data-checkout-directly="true"
+      {% endif %}
     >
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="svg-wrapper">

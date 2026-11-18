@@ -501,7 +501,8 @@
                     section_id: section.id,
                     show_pickup_availability: true,
                     kit_option_name: facelift_picker.settings.kit_option_name,
-                    button_template: block.settings.button_template
+                    button_template: block.settings.button_template,
+                    checkout_directly: block.settings.checkout_directly
                   -%}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
@@ -1170,6 +1171,13 @@
           "label": "Button text",
           "default": "Add [kit] to cart · [price]",
           "info": "[kit] = selected kit size, [price] = its price. Leave empty for the theme's \"Add to cart\"."
+        },
+        {
+          "type": "checkbox",
+          "id": "checkout_directly",
+          "default": false,
+          "label": "Skip cart and go straight to checkout",
+          "info": "After the item is added, customers land on the checkout page instead of seeing the cart."
         }
       ]
     },

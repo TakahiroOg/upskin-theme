@@ -67,6 +67,12 @@ if (!customElements.get('product-form')) {
               soldOutMessage.classList.remove('hidden');
               this.error = true;
               return;
+            } else if (this.dataset.checkoutDirectly === 'true') {
+              // Skip the cart UI: the item is already added, so go straight to checkout.
+              this.redirectingToCheckout = true;
+              this.resolveCartLinesUpdate(linesUpdateDeferred);
+              window.location.assign('/checkout');
+              return;
             } else if (!this.cart) {
               this.resolveCartLinesUpdate(linesUpdateDeferred);
               window.location = window.routes.cart_url;
@@ -111,6 +117,8 @@ if (!customElements.get('product-form')) {
             linesUpdateDeferred?.reject(e);
           })
           .finally(() => {
+            // Keep the loading state visible until the browser leaves for checkout.
+            if (this.redirectingToCheckout) return;
             this.submitButton.classList.remove('loading');
             if (this.cart && this.cart.classList.contains('is-empty')) this.cart.classList.remove('is-empty');
             if (!this.error) this.submitButton.removeAttribute('aria-disabled');
